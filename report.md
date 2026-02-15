@@ -67,7 +67,7 @@ An aircraft is affected by an AD only if it passes all checks in order:
   2. The serial number (MSN) must be within the allowed range.
   3. It must not have any excluded modifications.
   4. If the AD requires a modification, the aircraft must have it.
-  5. 
+
 If an aircraft fails any of these checks, it is not affected, and evaluation stops immediately.
 
 I also check too and it pass below table. 
