@@ -1,5 +1,5 @@
 # Businees Context
-Hundreds of new ADs monthly come. Manual extraction doesn't scale, so we need automated pipelines that can reliably extract applicability rules from PDF documents. So we can answer  "Is aircraft X affected by AD Y?" easily.
+Hundreds of new ADs monthly come. Manual extraction doesn't scale, so we need automated pipelines that can reliably extract applicability rules from PDF documents. So we can answer  "Is aircraft X affected by AD Y?" or "what AD that affected the aircraft" easily.
 
 # Problem
 
