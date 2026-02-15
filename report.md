@@ -38,7 +38,7 @@ After extraction, we feed this result into our agent that we prompt to parse to 
 
 I didn’t change this structure because, based on the two provided AD documents, it is already sufficient. Each modification only applies to the aircraft models explicitly listed. This means that when a user inputs a combination of model and modification, the system can correctly determine which AD affects the aircraft. Modifications are independent for each model, so a modification for one model won’t related to another aircraft model. This keeps parsing simple while ensuring accurate mapping between models and modifications.
 
-For example, the Airbus A320-211 is affected by the AD unless it has mod 24591 or the relevant service bulletin, while mod 24977 only applies to the Airbus A321. Under this assumption, the system does not expect combinations like A320-211 with mod 24977.
+For example, the Airbus A320-211 is affected by the AD unless it has mod 24591 or the relevant service bulletin, while mod 24977 only applies to the Airbus A321 according to EASA AD 2025-0254 document. Under this assumption, the system does not expect combinations like A320-211 with mod 24977.
 
 If such combinations occur (an edge case), separate applicability rules would be needed for each AD to map modifications to models accurately and ensure precise determination of affected aircraft. This could be added if extra time allows.
 
