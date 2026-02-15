@@ -48,7 +48,7 @@ def is_aircraft_affected(parsed_ad, aircraft_model: str, msn: int, modifications
         return "Not affected"
 
     # Check serial number constraints
-    if rules.msn_constraints and isinstance(rules.msn_constraints, list):
+    if rules.msn_constraints and isinstance(rules.msn_constraints, list) and msn is not None:
         if str(msn) not in rules.msn_constraints:
             return "Not affected"
 
