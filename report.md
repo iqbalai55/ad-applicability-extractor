@@ -36,11 +36,11 @@ After extraction, we feed this result into our agent that we prompt to parse to 
 }
 ```
 
-I don’t modify this structure since, according to the two provided AD documents, this is already sufficient, with the assumption that each modification only applies to the aircraft models explicitly listed. This means that when a user inputs a combination of aircraft model and modification, the system can correctly determine which AD is affected or not. Each model’s modifications are independent, so no modification for one model will apply to or exclude another model. This keeps the parsing simple while maintaining correct mapping between models and modifications.
+I didn’t change this structure because, based on the two provided AD documents, it is already sufficient. Each modification only applies to the aircraft models explicitly listed. This means that when a user inputs a combination of model and modification, the system can correctly determine which AD affects the aircraft. Modifications are independent for each model, so a modification for one model won’t related to another aircraft model. This keeps parsing simple while ensuring accurate mapping between models and modifications.
 
-For example, the Airbus A320-211 is included in the AD unless it has mod 24591 or the relevant service bulletin, while mod 24977 only applies to the Airbus A321. Under this assumption, the system does not expect a user to input a combination like A320-211 with mod 24977.
+For example, the Airbus A320-211 is affected by the AD unless it has mod 24591 or the relevant service bulletin, while mod 24977 only applies to the Airbus A321. Under this assumption, the system does not expect combinations like A320-211 with mod 24977.
 
-If there is such behaviour (the edge case), separate applicability rules would be required for each AD to ensure accurate mapping of modifications to models and to maintain precise determination of which aircraft are affected. And I hope I can add this if there is extra time.
+If such combinations occur (an edge case), separate applicability rules would be needed for each AD to map modifications to models accurately and ensure precise determination of affected aircraft. This could be added if extra time allows.
 
 ### Step 3: Prompt Refinement and Testing
 I refined the prompt itself based on a feedback loop from the LLM results. That’s why I created the file test\test_extraction_agent.py, to identify where the extraction mismatches or deviates from the expected output, so I can iteratively improve the prompt and parsing accuracy, for now, i just manually refine it, but it can be automated with agent-eval pattern.
@@ -62,7 +62,13 @@ Afterward, I tested several combinations, and the results are summarized in the 
 | A319-100       | 9234  | None                         | Not affected      | Not affected      |
 | MD-10-10F      | 46234 | None                         | Affected          | Not affected      |
 
-An aircraft is considered affected by an AD only if it passes all applicability checks in order: it must match a listed aircraft model, fall within any specified serial number constraints, have no excluded modifications (such as certain production mods or service bulletins), and —if required— possess the necessary modifications. The evaluation stops at the first failing condition: a mismatched model, an out-of-range MSN, or a disqualifying modification immediately excludes the aircraft.
+An aircraft is affected by an AD only if it passes all checks in order:
+  1. The aircraft model must match the AD.
+  2. The serial number (MSN) must be within the allowed range.
+  3. It must not have any excluded modifications.
+  4. If the AD requires a modification, the aircraft must have it.
+  5. 
+If an aircraft fails any of these checks, it is not affected, and evaluation stops immediately.
 
 I also check too and it pass below table. 
 
